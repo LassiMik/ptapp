@@ -2,12 +2,17 @@ import React, { useState, useEffect } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
+import DayJS from 'react-dayjs';
 
 function Traininglist() {
-    const [training, setTraining] = ([
-        { activity: 'Spinning', date: 'asd', duration: '60', customer: 'John Johnson' },
-        { activity: 'Spinning', date: 'asd', duration: '60', customer: 'John Johnson' }
-    ]);
+    const training = [
+        { activity: 'Spinning', date: DayJS('2022-12-06T05:31:00.517+00:00'), duration: 60, customer: 'John Johnson' },
+        { activity: 'Spinning', date: DayJS('2022-12-06T05:31:00.517+00:00'), duration: 60, customer: 'John Johnson' }
+    ]
+    /*const [training, setTraining] = ([
+        { activity: 'Spinning', date: 'asd', duration: 60, customer: 'John Johnson' },
+        { activity: 'Spinning', date: 'asd', duration: 60, customer: 'John Johnson' }
+    ]);*/
     console.log(training);
     /*
     useEffect(() => {

@@ -25,13 +25,13 @@ function Customerlist() {
             .then((data) => setCustomers(data.content));
     }
     const [columnDefs, setColumnDefs] = useState([
-        { field: "firstname" },
-        { field: "lastname" },
-        { field: "email" },
-        { field: "phone" },
-        { field: "streetaddress" },
-        { field: "postcode" },
-        { field: "city" },
+        { field: "firstname", sortable: true, filter: true  },
+        { field: "lastname", sortable: true, filter: true  },
+        { field: "email", sortable: true, filter: true  },
+        { field: "phone", sortable: true, filter: true  },
+        { field: "streetaddress", sortable: true, filter: true  },
+        { field: "postcode", sortable: true, filter: true  },
+        { field: "city", sortable: true, filter: true  },
     ])
     return (
         <> 
