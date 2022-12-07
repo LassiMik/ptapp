@@ -73,10 +73,10 @@ function Customerlist() {
         {
             headerName: "",
             width: 100,
-            field: "links.self.href",
-            cellRenderer: (link) => (
+            field: "links.0.href",
+            cellRenderer: (params) => (
 
-                <IconButton color="error" onClick={() => deleteCustomer(link.value)}>
+                <IconButton color="error" onClick={() => deleteCustomer(params.value)}>
                     <DeleteIcon />
                 </IconButton>
             ),
@@ -84,9 +84,9 @@ function Customerlist() {
         {
             headerName: "",
             width: 100,
-            field: "links.self.href",
-            cellRenderer: (link) => (
-                <Editcustomer updateCustomer={updateCustomer} params={link} />
+            field: "links.0.href",
+            cellRenderer: (params) => (
+                <Editcustomer updateCustomer={updateCustomer} params={params} />
             ),
         },
     ]);
