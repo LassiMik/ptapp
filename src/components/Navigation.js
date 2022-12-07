@@ -79,7 +79,7 @@ function Navigation() {
 
     return (
         <div>
-            {['left'].map((anchor) => (
+            {['menu'].map((anchor) => (
                 <React.Fragment key={anchor}>
                     <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
                     <Drawer
