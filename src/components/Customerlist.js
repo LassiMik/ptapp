@@ -29,7 +29,7 @@ function Customerlist() {
     };
 
     const addCustomer = (customer) => {
-        fetch("https://carrestapi.herokuapp.com/cars", {
+        fetch("https://customerrest.herokuapp.com/api/customers", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(customer),
