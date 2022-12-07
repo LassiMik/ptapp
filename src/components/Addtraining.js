@@ -15,11 +15,14 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import { blue } from '@mui/material/colors';
 import Select from 'react-select'
+import { LinkSharp } from "@mui/icons-material";
+import DatePicker from "react-datepicker";
 
 
 
 export default function Addtraining({ addTraining }) {
     const [open, setOpen] = React.useState(false);
+    const [date, setDate] = React.useState(new Date());
     const [customers, setCustomers] = useState([]);
     const [trainings, setTrainings] = useState([]);
 
@@ -69,27 +72,39 @@ export default function Addtraining({ addTraining }) {
     const handleListItemClick = (value) => {
         setSelectedcustomer(value);
     };
-    const customeroptions = customers.map(customer => ({label: customer.firstname + " " + customer.lastname}));
+    const changecustomer = (event) => {
+        //console.log(event.target.value)
+        //setTraining({...training, [event.target.name]: event.target.value});
+    }
 
-    const trainingoptions = trainings.map(training => ({label: training.activity}));
+function find(event) {
+    //event.preventDefault();
+    setSelectedcustomer(event.target.value)
+    console.log(selectedcustomer)
+    
+}
+const customeroptions = customers.map(customer => ({ label: customer.firstname + " " + customer.lastname, value: "links.0.href" }));
 
-    return (
-        <div>
-            <Button variant="outlined" onClick={handleClickOpen}>
-                Add customer
-            </Button>
-            <Dialog onClose={handleClose} open={open}>
-                <DialogTitle>New training :DDDDD 8=D (☞ﾟヮﾟ)☞</DialogTitle>
-                <DialogContent>
-                        <Select options={customeroptions} />
-                        <Select options={trainingoptions} />
-                    <DialogActions>
-                        <Button onClick={handleClose}>Save</Button>
-                        <Button onClick={handleCancel}>Cancel</Button>
-                    </DialogActions>
-                </DialogContent>
-            </Dialog>
-            
-        </div >
-    );
+const trainingoptions = trainings.map(training => ({ label: training.activity, value: training.activity }));
+
+return (
+    <div>
+        <Button variant="outlined" onClick={handleClickOpen}>
+            Add customer
+        </Button>
+        <Dialog onClose={handleClose} open={open} sx={{ "& .MuiDialog-container": { "& .MuiPaper-root": { width: "100%", maxWidth: "600px", height: "100%", maxHeight: "600px" } } }}>
+            <DialogTitle>New training :DDDDD 8=D (☞ﾟヮﾟ)☞</DialogTitle>
+            <DialogContent>
+                <Select onChange = {(e) => find(e)} options={customeroptions} />
+                <Select options={trainingoptions} />
+                <DatePicker selected={date} onChange={(date) => setDate(date)} />
+                <DialogActions>
+                    <Button onClick={handleClose}>Save</Button>
+                    <Button onClick={handleCancel}>Cancel</Button>
+                </DialogActions>
+            </DialogContent>
+        </Dialog>
+
+    </div >
+);
 }
