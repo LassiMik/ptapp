@@ -21,25 +21,14 @@ import Select from 'react-select'
 export default function Addtraining({ addTraining }) {
     const [open, setOpen] = React.useState(false);
     const [customers, setCustomers] = useState([]);
-    const example = [
-        {label: "asd"},
-        {label: "ddaaa"},
-        {label: "d12313"},
-    ]
+    const [trainings, setTrainings] = useState([]);
 
-
-    
     const [selectedcustomer, setSelectedcustomer] = useState([]);
     const [training, setTraining] = React.useState({
-        activity: '',
         date: '',
+        activity: '',
         duration: '',
-        phone: '',
-
-        /*
-        streetaddress: '',
-        postcode: '',
-        city: '',*/
+        customer: '',
     });
 
     useEffect(() => {
@@ -51,6 +40,15 @@ export default function Addtraining({ addTraining }) {
             .then((response) => response.json())
             .then((data) => setCustomers(data.content));
     };
+    useEffect(() => {
+        fetchTraining();
+    }, []);
+
+    const fetchTraining = () => {
+        fetch("https://customerrest.herokuapp.com/gettrainings")
+            .then((response) => response.json())
+            .then((data) => setTrainings(data));
+    }
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -71,7 +69,9 @@ export default function Addtraining({ addTraining }) {
     const handleListItemClick = (value) => {
         setSelectedcustomer(value);
     };
-    const options = customers.map(customer => ({label: customer.firstname + " " + customer.lastname}));
+    const customeroptions = customers.map(customer => ({label: customer.firstname + " " + customer.lastname}));
+
+    const trainingoptions = trainings.map(training => ({label: training.activity}));
 
     return (
         <div>
@@ -81,10 +81,8 @@ export default function Addtraining({ addTraining }) {
             <Dialog onClose={handleClose} open={open}>
                 <DialogTitle>New training :DDDDD 8=D (☞ﾟヮﾟ)☞</DialogTitle>
                 <DialogContent>
-                    <div className="row">
-                        <div className=""></div>
-                        <Select options={options} />
-                    </div>
+                        <Select options={customeroptions} />
+                        <Select options={trainingoptions} />
                     <DialogActions>
                         <Button onClick={handleClose}>Save</Button>
                         <Button onClick={handleCancel}>Cancel</Button>
