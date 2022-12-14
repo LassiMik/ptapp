@@ -6,6 +6,8 @@ import dayjs from 'dayjs';
 import Addtraining from "./Addtraining";
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from "@mui/icons-material/Delete";
+import { format } from 'date-fns';
+import EditTraining from "./EditTraining";
 
 function Traininglist() {
     const [trainings, setTrainings] = useState([]);
@@ -41,13 +43,33 @@ function Traininglist() {
             }
         });
     };
+    const updateTraining = (link) => {
+        const updatelink = "https://customerrest.herokuapp.com/api/trainings/"+link
+        fetch(updatelink, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(updateTraining),
+        }).then((response) => {
+          if (response.ok) {
+            fetchTraining();
+          }
+        });
+      };
 
     const [columnDefs, setColumnDefs] = useState([
-        { field: "activity" },
-        { field: "date" },
-        { field: "duration" },
-        { field: "customer.firstname", headerName: "Customer Name" },
-        { field: "customer.lastname", headerName: "" },
+        { field: "activity", sortable: true, filter: true },
+        { field: "date", valueFormatter: params => format(new Date(params.value), "dd.MM.yyyy hh:mm"), sortable: true, filter: true },
+        { field: "duration", sortable: true, filter: true },
+        { field: "customer.firstname", headerName: "Customer Name", sortable: true, filter: true },
+        { field: "customer.lastname", headerName: "", sortable: true, filter: true },
+        {
+            headerName: "",
+            width: 100,
+            field: "id",
+            cellRenderer: (params) => (
+                <EditTraining updateTraining={updateTraining} params={params} />
+            ),
+        },
         {
             headerName: "",
             width: 100,
@@ -60,20 +82,27 @@ function Traininglist() {
             ),
         }
     ])
-    return (
-        <> 
-        <Addtraining addTraining={addTraining} />
-            <div
-                style={{ height: 600, width: "100%" }}
-                className="ag-theme-material"
+    return(
+        <div className="ag-theme-material"
+        style={{ height: '700px', width: '100%' }}>
+        <Addtraining saveTraining={addTraining}/>
+        <AgGridReact
+
+            filterable={true}
+            sortable={true}
+            onGridReady={params => gridRef.current = params.api}
+            ref={gridRef}
+            rowSelection="single"
+            rowData={trainings}
+            columnDefs={columnDefs}
             >
-                <AgGridReact
-                    rowData={trainings}
-                    columnDefs={columnDefs}
-                >
-                </AgGridReact>
-            </div>
-        </>
-    )
+                
+
+            </AgGridReact>
+
+
+    </div>
+
+    );
 }
 export default Traininglist;
