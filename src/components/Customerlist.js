@@ -14,6 +14,7 @@ import Navigation from './Navigation'
 import Traininglist from './Traininglist'
 import Editcustomer from "./Editcustomer";
 import Addcustomer from "./Addcustomer";
+import AsyncCSV from "./AsyncCSV";
 
 function Customerlist() {
     const [customers, setCustomers] = useState([]);
@@ -93,6 +94,7 @@ function Customerlist() {
     return (
         <>
         <Addcustomer addCustomer={addCustomer} />
+        <AsyncCSV />
             <div
                 style={{ height: 600, width: "100%" }}
                 className="ag-theme-material"
